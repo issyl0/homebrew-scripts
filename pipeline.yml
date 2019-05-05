@@ -17,11 +17,32 @@ groups:
       - brew-audit-strict-online
   - name: official-homebrew-commands
     jobs:
+      - brew-audit-strict
       - brew-audit-strict-online
   - name: personal-scripts
     jobs:
       - report-on-formulae-urls
+
 jobs:
+  - name: brew-audit-strict
+    serial: true
+    plan:
+      - task: run-brew-audit-strict
+        timeout: 90m
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: linuxbrew/brew
+              tag: 2.0.1
+          run:
+            path: sh
+            args:
+              - -c
+              - |
+                brew audit --strict
+
   - name: brew-audit-strict-online
     serial: true
     plan:
