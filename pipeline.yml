@@ -12,9 +12,6 @@ resources:
       branch: master
 
 groups:
-  - name: default
-    jobs:
-      - brew-audit-strict-online
   - name: official-homebrew-commands
     jobs:
       - brew-audit-strict
