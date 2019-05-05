@@ -11,6 +11,16 @@ resources:
       uri: https://github.com/issyl0/homebrew-scripts
       branch: master
 
+groups:
+  - name: default
+    jobs:
+      - brew-audit-strict-online
+  - name: official-homebrew-commands
+    jobs:
+      - brew-audit-strict-online
+  - name: personal-scripts
+    jobs:
+      - report-on-formulae-urls
 jobs:
   - name: brew-audit-strict-online
     serial: true
