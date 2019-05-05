@@ -1,0 +1,44 @@
+resources:
+  - name: issyl0-homebrew-core-git
+    type: git
+    source:
+      uri: https://github.com/issyl0/homebrew-core
+      branch: master
+
+  - name: homebrew-scripts-git
+    type: git
+    source:
+      uri: https://github.com/issyl0/homebrew-scripts
+      branch: master
+
+jobs:
+  - name: report-on-formulae-urls
+    serial: true
+    plan:
+      - get: issyl0-homebrew-core-git
+        trigger: true
+      - get: homebrew-scripts-git
+        trigger: true
+      - task: bundle-and-run-script
+        timeout: 90m
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: ruby
+              tag: 2.6.2
+          inputs:
+            - name: issyl0-homebrew-core-git
+            - name: homebrew-scripts-git
+          outputs:
+            - name: issyl0-homebrew-core-git
+          run:
+            path: sh
+            dir: homebrew-scripts-git
+            args:
+              - -c
+              - |
+                export FORMULAE_DIR=../issyl0-homebrew-core-git/Formula
+                bundle install --without development
+                bundle exec ruby check_formulae_urls_work.rb
