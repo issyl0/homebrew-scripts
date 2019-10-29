@@ -8,5 +8,5 @@ Vagrant.configure("2") do |config|
     vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'SmartCard', '--vendorid', '0x1050', '--productid', '0x0407']
   end
 
- config.vm.provision :shell, path: "homebrew-linux-maintainer-setup.sh"
+ config.vm.provision :shell, path: "homebrew-linux-maintainer-setup.sh", privileged: false
 end

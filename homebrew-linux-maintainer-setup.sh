@@ -2,10 +2,6 @@
 
 sudo apt-get update
 
-sudo useradd issyl0
-sudo usermod -aG issyl0
-sudo su - issyl0
-
 sudo apt-get install build-essential curl file git
 yes | sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
 
@@ -13,6 +9,9 @@ test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
 test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
 echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+
+source ~/.bash_profile
+source ~/.profile
 
 mkdir ~/repos
 git clone https://github.com/issyl0/dotfiles ~/repos/dotfiles
@@ -22,6 +21,7 @@ ln -s ~/repos/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/repos/dotfiles/.gitignore_global ~/.gitignore_global
 
 brew update
+brew install gcc
 brew bundle --file=~/repos/dotfiles/Brewfile
 
 # Make Yubikey work.
